@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CakeLaya</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .logo {
+            max-width: 200px;
+            margin-bottom: 20px;
+        }
+        .button {
+            display: inline-block;
+            background-color: #FF4081;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="/logo.png" alt="CakeLaya Logo" class="logo">
+        <h1>Opening CakeLaya...</h1>
+        <p>Click below if the app doesn't open automatically:</p>
+        <a href="#" id="openApp" class="button">Open in App</a>
+        <a href="https://play.google.com/store/apps/details?id=com.cakelaya.app" class="button">Download App</a>
+    </div>
+
+    <script>
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.pathname);
+            const pathParts = window.location.pathname.split('/');
+            if (param === 'shopId' && pathParts[1] === 'shop') {
+                return pathParts[2];
+            }
+            return null;
+        }
+
+        window.onload = function() {
+            const shopId = getQueryParam('shopId');
+            const deepLink = `cakelaya://shop/${shopId}`;
+            const openAppButton = document.getElementById('openApp');
+            
+            openAppButton.href = deepLink;
+            
+            // Try to open the app automatically
+            setTimeout(function() {
+                window.location.href = deepLink;
+            }, 100);
+
+            // If app doesn't open within 2 seconds, show the buttons
+            setTimeout(function() {
+                document.querySelector('.container').style.opacity = '1';
+            }, 2000);
+        };
+    </script>
+</body>
+</html>
